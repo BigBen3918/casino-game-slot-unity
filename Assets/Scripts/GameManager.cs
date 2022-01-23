@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour {
 
     [Header("Components")]
     [SerializeField] Animator _animator;
+    [SerializeField] Animator _errorAnim;
 
     [Header("Winning")]
     [SerializeField] List<GameObject> _winningIcons;
@@ -40,7 +41,9 @@ public class GameManager : MonoBehaviour {
     public void StartSpin()
     {
         if (_spinning) return;
-            StartCoroutine(SendSignal());
+
+        _spinning = true;
+        StartCoroutine(SendSignal());
     }
 
     private IEnumerator SendSignal()
@@ -56,7 +59,10 @@ public class GameManager : MonoBehaviour {
 
         if (www.result != UnityWebRequest.Result.Success)
         {
-            Debug.Log(www.error);
+            _errorAnim.SetBool("error", true);
+            yield return new WaitForSeconds(2f);
+            _errorAnim.SetBool("error", false);
+            _spinning = false;
         }
         else
         {
@@ -67,11 +73,13 @@ public class GameManager : MonoBehaviour {
             {
                 // Spin Start
                 SlotMachineReady();
-                _spinning = true;
             }
             else
             {
-                Debug.Log(apiform.message);
+                _errorAnim.SetBool("error", true);
+                yield return new WaitForSeconds(2f);
+                _errorAnim.SetBool("error", false);
+                _spinning = false;
             }
         }
     }
