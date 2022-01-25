@@ -25,7 +25,6 @@ public class MenuManager : MonoBehaviour
     [SerializeField] Button _linesButtonMinus;
     [SerializeField] Button _betButtonPlus;
     [SerializeField] Button _betButtonMinus;
-    [SerializeField] Button _betButtonMax;    
 
     private GameManager gameManager;
     public static GlobalVariable globalVariable;
@@ -40,7 +39,6 @@ public class MenuManager : MonoBehaviour
         _linesButtonMinus.onClick.AddListener(LineMinusClick);
         _betButtonPlus.onClick.AddListener(BetPlusClick);
         _betButtonMinus.onClick.AddListener(BetMinusClick);
-        _betButtonMax.onClick.AddListener(BetMax);
 
         globalVariable = new GlobalVariable();
 
@@ -94,8 +92,14 @@ public class MenuManager : MonoBehaviour
         }
         else
         {
+            _spinButton.interactable = false;
             gameManager.StartSpin();
         }
+    }
+
+    public void setEnableSpin()
+    {
+        _spinButton.interactable = true;
     }
 
     private void InitialText()
@@ -147,18 +151,6 @@ public class MenuManager : MonoBehaviour
         _linesText.text = globalVariable._lines.ToString();
 
         _linesButtonMinus.interactable = true;
-
-        gameManager.ToggleLines();
-        CalculateTotalBet();
-    }
-
-    private void BetMax()
-    {
-        globalVariable._lines = 25;
-        _linesText.text = globalVariable._lines.ToString();
-
-        globalVariable._bet = 1500;
-        _betText.text = globalVariable._bet.ToString("0.00");
 
         gameManager.ToggleLines();
         CalculateTotalBet();

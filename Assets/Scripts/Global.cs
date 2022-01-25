@@ -9,8 +9,7 @@ public class APIForm
 
 public class GlobalVariable
 {
-    //public string BaseUrl = "http://31.220.57.223:80/";
-    public string BaseUrl = "http://192.168.115.168:5000/";
+    public string BaseUrl = "http://45.132.242.139/";
 
     // Game Status Variable
     public int _lines;

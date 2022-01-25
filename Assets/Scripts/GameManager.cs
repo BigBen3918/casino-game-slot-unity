@@ -30,7 +30,6 @@ public class GameManager : MonoBehaviour {
 
     public static APIForm apiform;
 
-    private bool _spinning;
     private float _spinTime;
 
     private bool _guiActived {
@@ -38,11 +37,13 @@ public class GameManager : MonoBehaviour {
                 set { }
     }
 
+    void Start()
+    {
+        _bigWinAnimation.SetActive(false);
+    }
+
     public void StartSpin()
     {
-        if (_spinning) return;
-
-        _spinning = true;
         StartCoroutine(SendSignal());
     }
 
@@ -62,7 +63,7 @@ public class GameManager : MonoBehaviour {
             _errorAnim.SetBool("error", true);
             yield return new WaitForSeconds(2f);
             _errorAnim.SetBool("error", false);
-            _spinning = false;
+            GameObject.Find("MenuManager").GetComponent<MenuManager>().setEnableSpin();
         }
         else
         {
@@ -79,7 +80,7 @@ public class GameManager : MonoBehaviour {
                 _errorAnim.SetBool("error", true);
                 yield return new WaitForSeconds(2f);
                 _errorAnim.SetBool("error", false);
-                _spinning = false;
+                GameObject.Find("MenuManager").GetComponent<MenuManager>().setEnableSpin();
             }
         }
     }
@@ -123,7 +124,7 @@ public class GameManager : MonoBehaviour {
             MenuManager.globalVariable._myBalance += (float)apiform.moneyResult;
         }
 
-        _spinning = false;
+        GameObject.Find("MenuManager").GetComponent<MenuManager>().setEnableSpin();
     }
 
     private void SetWinningCombination()
@@ -188,11 +189,6 @@ public class GameManager : MonoBehaviour {
                 }
             }
         }
-    }
-
-    private void Start()
-    {
-        _bigWinAnimation.SetActive(false);
     }
 
     // Game Ready
