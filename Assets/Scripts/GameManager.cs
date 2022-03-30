@@ -120,7 +120,6 @@ public class GameManager : MonoBehaviour {
         {
             _WinBalance.text = apiform.moneyResult.ToString("$0.00");
             _bigWinAnimation.SetActive(true);
-            MenuManager.globalVariable._lastWinBalance = apiform.moneyResult;
             MenuManager.globalVariable._myBalance += (float)apiform.moneyResult;
         }
 
